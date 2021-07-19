@@ -1,7 +1,12 @@
 import React from 'react'
 import styled, {createGlobalStyle}  from "styled-components";
-import Post from './components/Post/Post'
 import Chat from './components/Chat/Chat'
+// import Img from './img/whatsapp.png'
+
+// import SearchIcon from '@material-ui/icons/Search';
+// import MoreVertIcon from '@material-ui/icons/MoreVert';
+// import CameraAltIcon from '@material-ui/icons/CameraAlt';
+// import Chat from './components/Chat/Chat'
 
 
 const GlobalStyle = createGlobalStyle`
@@ -13,141 +18,148 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const ContainerHeader = styled.header`
-  background-color: #03663b;
-  height: 70px;
+const GeneralMaster = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-
-`
+  flex-direction: column;
+  height: 100vh;
+  background-color: black;
+  flex: 1;
+  
+` 
 
 const GeneralContainer = styled.div`
-  display: flex;
-  height: 100vh;
-
+  max-width: 600px;
+  width: 450px;
+  height: 550px;
+  display: grid;
+  flex-direction: column;
+  background-image: url('https://i.pinimg.com/originals/cf/14/0d/cf140dac517f37fc801b6b91aaf76fea.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 4%;
+        
 `
 
-const SideBar = styled.div`
-  width: 35%;
-  max-width: 400px;
+const MessagesContainer = styled.div`
   display: flex;
   flex-direction: column;
-  border-right: 1px solid black;
+  padding: 20px;
+  overflow: auto;
+  height: 400px;
+     
+  span {
+    word-wrap: break-word;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent; 
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 20px;      
+    border: 2px solid transparent; 
+  }
+}
 `
 
-const UserPhoto = styled.img`
-  height: 40px;
-  width: 40px;
-  border-radius: 50%;
-  margin: 10px;
+const BlocoMensagem = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  word-wrap: break-word;
 
-`
-
-const Pesquisar = styled.div`
-  background-color: #f2f2f2;
-  border-bottom: 1px solid #bab8b8;
-  padding: 5px;
-  display:flex;
-  align-items: center;
-  
-`
-
-const ImgPesquisaar = styled.img`
-  height: 18px;
-  margin: 0 10px;
-  cursor: pointer;
-  
-
-`
-
-const InputPesquisar = styled.input`
-  width: 300px;
-  height: 30px;
-  border: none;
-  outline: 0;
-  flex: 1;
-  border-radius: 20px;
-  padding: 10px;
-  text-align: center;
-
-`
-
-const ListaChatBackground = styled.div`
+  div{
     background-color: white;
-    flex: 1;
+    max-width: 60%;
+    min-width: 8%;
+    margin-bottom: 1em;
+    padding: 0.4em 0.8em;
+    border-radius: 0.5em;
+    font-weight: 450;
+    line-height: 1.3;
+    box-shadow: 0px 3px 3px 0px black;
+
+    h3 {
+      color: #9AAC8C;
+      font-size: 0.8em;
+    }
+  }
 `
 
 class App extends React.Component {
 
-  state = {
+    state = {
+        msgGuard: [],
+        user: '',
+        text: '',
+        isOn: false,
+        isIcon: false
+    }
 
-    topo: [
-      {
-        id: 1,
-        perfil: 'https://picsum.photos/50/50',
-        nome: 'Luan',
-      },
+    changeUserName = (event) => {
+      this.setState({ user: event.target.value })
+    }
+  
+    changeUserText = (event) => {
+      this.setState({ text: event.target.value })
+    }
 
-      {
-        id: 2,
-        perfil: 'https://picsum.photos/50/51',
-        nome: 'Lx',
-      },
+    sendText = () => {
+      const mensagem = { 
+          userName: this.state.user,
+          userText: this.state.text
+      }
 
-      {
-        id: 3,
-        perfil: 'https://picsum.photos/50/53',
-        nome: 'Cleiton',
-      },
+      if (this.state.text === ''){
+        return;
+      }
 
-      {
-        id: 4,
-        perfil: 'https://picsum.photos/50/54',
-        nome: 'Maisa',
-      },
-    ]
-  }
+      if (this.state.user.length === 0){
+        return;
+      }
 
-  onChangeButton = () => {
-
+      const salvarValor = [mensagem, ...this.state.msgGuard];
+      this.setState({ msgGuard: salvarValor })
+      this.setState({ text: ''})
   }
 
   render() {
-    return (
-          <GeneralContainer>
-            <GlobalStyle/>  
-            <SideBar>
-                  <ContainerHeader>
-                    <UserPhoto src={'https://www.wikihow.com/images_en/thumb/6/60/Center-an-Image-in-HTML-Step-10.jpg/-crop-342-184-244px-Center-an-Image-in-HTML-Step-10.jpg.webp'} alt={'Imagem do usuario'}/>
-                  </ContainerHeader>
-
-                  <Pesquisar>
-                      <ImgPesquisaar src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTd4mYQ5j90_U84a7gBNiVQumK0_vhKyKkTHDkiTeW0Cb2bZkMDYr42axltqdcUsMR4HaI&usqp=CAU'/>
-                     <InputPesquisar placeholder="Pesquisar ou começar uma nova conversa"/>
-                  </Pesquisar>
-
-                  <ListaChatBackground>  
-                      {this.state.topo.map(({ key, perfil, nome }) => {
-                      return (
-                          <div onClick={this.onChangeButton}>
-                            <Post 
-                              key = {key}
-                              perfil = {perfil}
-                              nome = {nome}
-                            />
-                         </div>
-                      )
-                    }
-                )} 
-              </ListaChatBackground>
-
-
-            </SideBar>
-            <Chat></Chat>
-          </GeneralContainer>
-    );
-  }
+      <GlobalStyle/>
+      const mensagensEnviadas = this.state.msgGuard.map((item) => {
+          return (
+             <BlocoMensagem> 
+                
+                <div>
+                  <h3>{item.userName + ': '}</h3>
+                  {item.userText}
+                </div>                 
+             </BlocoMensagem>
+           )
+        })
+      
+        return (
+       <GeneralMaster>
+            <GeneralContainer>
+                <MessagesContainer>{mensagensEnviadas}</MessagesContainer>
+                <Chat 
+                    valueUser = {this.state.user}
+                    valueTextUser = {this.state.text}
+                    valueInput = {this.changeUserName}
+                    valueInputText = {this.changeUserText}
+                    onClickBotton = {this.sendText}
+                />
+            </GeneralContainer>
+       </GeneralMaster>
+      )
+    }
 }
 
 export default App;
