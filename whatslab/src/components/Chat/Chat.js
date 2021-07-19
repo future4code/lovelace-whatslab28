@@ -1,60 +1,74 @@
 import React from 'react'
 import styled from "styled-components";
-import Img from './img/whatsapp.png'
+import SendIcon from '@material-ui/icons/Send';
 
-const ContainerChat = styled.div`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #fafafa;
-`
+const MessagesContainerChat = styled.div`
+  heigth: 10vh;
+  
+   div{
+      display: flex;
+      background-color: #b9babd;
+      height: 75px;
+      justify-content: center;
+      align-items: center;
+  }
 
-const ImgChat = styled.img`
-    margin: 30px;
-    width: 300px;
-
-`
-
-const TituloChat = styled.h3`
-    color: #999696;
-    font-size: 1.5em;
-    font-family: Courier New, monospace;
-    margin: 10px;
-
-`
-
-const ParagrafoChat = styled.p`
-    color: #a6a4a4;
-    font-size: 0.9em;
+  input{ 
+    height: 30px;
+    width: 250px;
+    border: none;
+    border-radius: 20px;
+    box-sizing: border-box;
+    margin: 0 5px;
     text-align: center;
-    
+    outline: none;    
+  }
+
+  input:nth-child(1) {
+    width: 100px;
+      
+  }
+
+  button{
+    height: 50px;
+    width: 50px;
+    background-color: white;
+    border-radius: 50%;
+    outline: 0;
+    border: none;
+
+        :hover {
+            background-color: #dcdcde;
+            border-radius: 50%;
+        }
+    }
+  }
+
 `
 
-const ParagrafoChatComLinha = styled.p`
-    width: 50%;
-    color: #a6a4a4;
-    font-size: 0.9em;
-    text-align: center;
-    border-top: 1px solid #948f8f;
-    padding-top: 40px;
-    margin: 50px;
-    
-`
+class ChatMenssage extends React.Component {
 
-class Chat extends React.Component {
     render() {
         return (
-            <ContainerChat>
-                <ImgChat src={Img}/>
-                <TituloChat>Mantenha seu celular conectado</TituloChat> 
-                <ParagrafoChat>O whatsapp conecta ao seu celular para sicronizar suas mensagens. Para<br/> reduzir o uso de dados, conecte o seu celular a uma rede wi-fi</ParagrafoChat>
-                <ParagrafoChatComLinha>O whatsapp está disponível para Windows. Baixe Aqui.</ParagrafoChatComLinha>
-            </ContainerChat>
+            <MessagesContainerChat>
+                <div>
+                <input placeholder="Nome: "
+                    value = {this.props.valueUser}
+                    onChange = {this.props.valueInput}
+                />
 
+                <input placeholder="mensagem: "
+                    value={this.props.text}
+                    onChange={this.props.valueInputText} 
+                />
+
+                <button onClick={this.props.onClickBotton}>
+                    <SendIcon style={{height: "50px"}}/>
+                </button>
+                </div>
+            </MessagesContainerChat>
         )
-
     }
 }
 
-export default Chat;
+export default ChatMenssage;
